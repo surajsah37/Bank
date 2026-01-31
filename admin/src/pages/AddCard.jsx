@@ -28,7 +28,7 @@ export default function AddCard() {
         userId,
         cardNumber,
         cardType,
-        balance,
+        balance
       });
 
       setMessage("✅ Card added successfully");

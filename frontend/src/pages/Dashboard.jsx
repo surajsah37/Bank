@@ -21,6 +21,7 @@ export default function Dashboard() {
       const usersRes = await API.get("/users");
       const cardsRes = await API.get("/cards");
       const txRes = await API.get("/transactions");
+console.log("TX:", txRes.data);
 
       setUsers(usersRes.data);
       setCards(cardsRes.data);
