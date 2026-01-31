@@ -6,7 +6,7 @@ import authRoutes from "./routes/authRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import cardRoutes from "./routes/cardRoutes.js";
 import transactionRoutes from "./routes/transactionRoutes.js";
-
+import adminRoutes from "./routes/adminRoutes.js";
 dotenv.config();
 connectDB();
 
@@ -19,6 +19,8 @@ app.use("/api/users", userRoutes);
 app.use("/api/cards", cardRoutes);
 app.use("/api/transactions", transactionRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/admin", adminRoutes);
+
 app.get("/", (req, res) => {
   res.send("Banking API is running...");
 });

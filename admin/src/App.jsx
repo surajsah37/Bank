@@ -5,11 +5,14 @@ import AddCard from "./pages/AddCard";
 import AddTransaction from "./pages/AddTransaction";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Users from "./pages/Users";
+import Cards from "./pages/Cards";
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+
         <Route path="/login" element={<Login />} />
 
         <Route
@@ -47,6 +50,26 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+
+        {/* ✅ FIXED ROUTES */}
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <Users />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/cards"
+          element={
+            <ProtectedRoute>
+              <Cards />
+            </ProtectedRoute>
+          }
+        />
+
       </Routes>
     </BrowserRouter>
   );

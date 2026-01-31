@@ -14,7 +14,7 @@ export default function Sidebar() {
   return (
     <div className="w-64 min-h-screen bg-white dark:bg-gray-900 p-6 shadow">
 
-      {/* Logo / Title */}
+      {/* Logo */}
       <h1 className="text-2xl font-bold text-blue-600 mb-10">
         BankApp
       </h1>
@@ -22,9 +22,9 @@ export default function Sidebar() {
       {/* Navigation */}
       <nav className="space-y-2">
 
-        {/* USER & ADMIN BOTH */}
+        {/* Dashboard */}
         <NavLink
-          to="/"
+          to="/dashboard"
           className={({ isActive }) =>
             isActive ? activeClass : linkClass
           }
@@ -32,6 +32,7 @@ export default function Sidebar() {
           Dashboard
         </NavLink>
 
+        {/* Transactions */}
         <NavLink
           to="/history"
           className={({ isActive }) =>
@@ -41,7 +42,7 @@ export default function Sidebar() {
           Transactions
         </NavLink>
 
-        {/* ADMIN ONLY SECTION */}
+        {/* ADMIN ONLY */}
         {role === "admin" && (
           <>
             <p className="mt-6 mb-2 text-xs uppercase text-gray-400">
@@ -78,7 +79,6 @@ export default function Sidebar() {
         )}
 
       </nav>
-
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import API from "../services/api";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -10,53 +10,39 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const res = await API.post("/auth/login", {
-        email,
-        password,
-      });
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/admin-login",
+        { email, password }
+      );
 
       localStorage.setItem("adminToken", res.data.token);
-      navigate("/"); // go to admin dashboard
-    } catch (err) {
-      setError("Invalid email or password");
+
+      navigate("/");
+    } catch {
+      setError("Invalid admin credentials");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-6 rounded-xl shadow w-96"
-      >
-        <h2 className="text-2xl font-bold mb-4 text-center">
-          Admin Login
-        </h2>
+    <form onSubmit={handleSubmit}>
+      <h2>Admin Login</h2>
 
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
 
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full border p-2 mb-3 rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+      <input
+        placeholder="Email"
+        onChange={(e) => setEmail(e.target.value)}
+      />
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border p-2 mb-3 rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+      <input
+        type="password"
+        placeholder="Password"
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
-        <button className="w-full bg-blue-500 text-white py-2 rounded">
-          Login
-        </button>
-      </form>
-    </div>
+      <button>Login</button>
+    </form>
   );
 }
