@@ -1,5 +1,5 @@
 import express from "express";
-import { createCard, getCards } from "../controllers/cardController.js";
+import { createCard, getCards,deleteCard } from "../controllers/cardController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { authorizeRoles } from "../middleware/roleMiddleware.js";
 
@@ -25,5 +25,6 @@ router.get(
   protect,
   getCards
 );
+router.delete("/:id", protect, authorizeRoles("admin"), deleteCard);
 
 export default router;

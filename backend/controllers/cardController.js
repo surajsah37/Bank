@@ -25,3 +25,12 @@ export const getCards = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+export const deleteCard = async (req, res) => {
+  try {
+    await Card.findByIdAndDelete(req.params.id);
+
+    res.json({ message: "Card deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Delete failed" });
+  }
+};

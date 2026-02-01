@@ -5,8 +5,10 @@ import AddCard from "./pages/AddCard";
 import AddTransaction from "./pages/AddTransaction";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Users from "./pages/Users";
-import Cards from "./pages/Cards";
+//import Users from "./pages/Users";
+// import Cards from "./pages/Cards";
+import ViewUsers from "./pages/ViewUsers";
+import ViewCards from "./pages/ViewCards";
 
 export default function App() {
   return (
@@ -52,23 +54,39 @@ export default function App() {
         />
 
         {/* ✅ FIXED ROUTES */}
-        <Route
+        {/* <Route
           path="/users"
           element={
             <ProtectedRoute>
               <Users />
             </ProtectedRoute>
           }
-        />
+        /> */}
 
-        <Route
+        {/* <Route
           path="/cards"
           element={
             <ProtectedRoute>
               <Cards />
             </ProtectedRoute>
           }
-        />
+        /> */}
+   <Route
+  path="/users"
+  element={
+    <ProtectedRoute>
+      <ViewUsers />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="/cards"
+  element={
+    <ProtectedRoute>
+      <ViewCards />
+    </ProtectedRoute>
+  }
+/>
 
       </Routes>
     </BrowserRouter>
