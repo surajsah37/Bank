@@ -6,13 +6,17 @@ export default function Sidebar() {
   const role = getRoleFromToken(token);
 
   const linkClass =
-    "block px-4 py-2 rounded text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-700";
+    "block px-4 py-2 rounded text-gray-600 dark:text-gray-800 hover:bg-slate-400 dark:hover:bg-gray-700";
 
   const activeClass =
     "block px-4 py-2 rounded bg-blue-500 text-white";
 
   return (
-    <div className="w-64 min-h-screen bg-white dark:bg-gray-900 p-6 shadow">
+    // <div className="w-64 min-h-screen bg-white dark:bg-gray-900 p-6 shadow">
+    <div className="w-64 min-h-screen bg-slate-200 text-slate-200 p-6 shadow-xl">
+
+   
+
 
       {/* Logo */}
       <h1 className="text-2xl font-bold text-blue-600 mb-10">
@@ -41,6 +45,17 @@ export default function Sidebar() {
         >
           Transactions
         </NavLink>
+
+        {/* ⭐⭐⭐ BALANCE (FOR ALL USERS) ⭐⭐⭐ */}
+        <NavLink
+          to="/balance"
+          className={({ isActive }) =>
+            isActive ? activeClass : linkClass
+          }
+        >
+          Balance
+        </NavLink>
+
 
         {/* ADMIN ONLY */}
         {role === "admin" && (
@@ -82,3 +97,5 @@ export default function Sidebar() {
     </div>
   );
 }
+
+

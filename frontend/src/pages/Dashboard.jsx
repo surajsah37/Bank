@@ -8,62 +8,87 @@ import IncomeExpenseChart from "../components/charts/IncomeExpenseChart";
 import API from "../services/api";
 
 export default function Dashboard() {
+
   const [cards, setCards] = useState([]);
   const [transactions, setTransactions] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [balance, setBalance] = useState(0);
 
+  // ===============================
+  // Fetch Data
+  // ===============================
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = async () => {
     try {
-      const usersRes = await API.get("/users");
       const cardsRes = await API.get("/cards");
       const txRes = await API.get("/transactions");
-console.log("TX:", txRes.data);
+      const balanceRes = await API.get("/users/balance");
 
-      setUsers(usersRes.data);
       setCards(cardsRes.data);
       setTransactions(txRes.data);
-    } catch (error) {
-      console.error(error);
+      setBalance(balanceRes.data.balance);
+
+    } catch (err) {
+      console.log(err);
     }
   };
 
-  // Prepare chart data
+  // ===============================
+  // Balance Chart Data
+  // ===============================
   const balanceChartData = transactions.map((tx) => ({
     month: new Date(tx.createdAt).toLocaleString("default", {
       month: "short",
     }),
-    balance: tx.type === "income" ? tx.amount : -tx.amount,
+    balance: tx.type?.toLowerCase() === "income"
+      ? Number(tx.amount)
+      : -Number(tx.amount),
   }));
+
+
+  // ===============================
+  // ⭐ INCOME vs EXPENSE (FINAL FIX)
+  // MUST MATCH:
+  // dataKey="income"
+  // dataKey="expense"
+  // ===============================
+
+  const totalIncome = transactions
+    .filter((t) =>
+      ["income", "credit"].includes(t.type?.trim().toLowerCase())
+    )
+    .reduce((sum, t) => sum + Number(t.amount), 0);
+
+  const totalExpense = transactions
+    .filter((t) =>
+      ["expense", "debit"].includes(t.type?.trim().toLowerCase())
+    )
+    .reduce((sum, t) => sum + Number(t.amount), 0);
 
   const incomeExpenseData = [
     {
-      name: "Income",
-      value: transactions
-        .filter((t) => t.type === "income")
-        .reduce((sum, t) => sum + t.amount, 0),
-    },
-    {
-      name: "Expense",
-      value: transactions
-        .filter((t) => t.type === "expense")
-        .reduce((sum, t) => sum + t.amount, 0),
+      name: "Money",
+      income: totalIncome,
+      expense: totalExpense,
     },
   ];
 
+
   return (
-    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="flex min-h-screen bg-gray-100">
+
       <Sidebar />
 
-      <div className="flex-1 p-6 space-y-6 text-gray-800 dark:text-gray-100">
+      <div className="flex-1 p-6 space-y-6">
+
         <Navbar />
 
-        {/* Cards */}
+        {/* ================= Cards ================= */}
         <div>
           <h2 className="text-xl font-bold mb-4">My Cards</h2>
+
           <div className="flex gap-6 flex-wrap">
             {cards.map((card) => (
               <Card
@@ -76,14 +101,17 @@ console.log("TX:", txRes.data);
           </div>
         </div>
 
-        {/* Charts */}
+
+        {/* ================= Charts ================= */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <BalanceChart data={balanceChartData} />
           <IncomeExpenseChart data={incomeExpenseData} />
         </div>
 
-        {/* Transactions */}
+
+        {/* ================= Transactions ================= */}
         <TransferHistory transfers={transactions} />
+
       </div>
     </div>
   );

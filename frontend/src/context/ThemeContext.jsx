@@ -1,17 +1,47 @@
+// import { createContext, useEffect, useState } from "react";
+
+// export const ThemeContext = createContext();
+
+// export function ThemeProvider({ children }) {
+//   const [dark, setDark] = useState(false);
+
+//   useEffect(() => {
+//     const root = document.documentElement;
+
+//     if (dark) {
+//       root.classList.add("dark");
+//     } else {
+//       root.classList.remove("dark");
+//     }
+//   }, [dark]);
+
+//   return (
+//     <ThemeContext.Provider value={{ dark, setDark }}>
+//       {children}
+//     </ThemeContext.Provider>
+//   );
+// }
+
+
 import { createContext, useEffect, useState } from "react";
 
 export const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(() => {
+    const saved = localStorage.getItem("theme");
+    return saved ? saved === "dark" : false;
+  });
 
   useEffect(() => {
     const root = document.documentElement;
 
     if (dark) {
       root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
       root.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
   }, [dark]);
 

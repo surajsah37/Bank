@@ -1,3 +1,4 @@
+
 import {
   BarChart,
   Bar,
@@ -24,3 +25,12 @@ export default function IncomeExpenseChart({ data }) {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+

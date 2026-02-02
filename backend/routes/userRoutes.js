@@ -2,6 +2,8 @@ import express from "express";
 import { createUser, getUsers ,  deleteUser} from "../controllers/userController.js";
 import { protect } from "../middleware/authMiddleware.js";
 import { authorizeRoles } from "../middleware/roleMiddleware.js";
+import { getBalance } from "../controllers/userController.js";
+
 const router = express.Router();
 
 router.post("/", createUser);
@@ -19,5 +21,7 @@ router.get(
   protect,
   getUsers
 );
+router.get("/balance", protect, getBalance);
+
 router.delete("/:id", protect, authorizeRoles("admin"), deleteUser);
 export default router;

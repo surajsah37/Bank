@@ -3,6 +3,8 @@ import Dashboard from "./pages/Dashboard";
 import History from "./pages/History";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Login from "./pages/Login"; 
+import BalancePage from "./pages/BalancePage";
+
 function App() {
   return (
     <BrowserRouter>
@@ -42,7 +44,8 @@ function App() {
             </ProtectedRoute>
           }
         />
-       
+       <Route path="/balance" element={<BalancePage />} />
+
       </Routes>
     </BrowserRouter>
   );

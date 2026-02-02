@@ -15,3 +15,5 @@ export default function Card({ balance, number, color }) {
     </div>
   );
 }
+
+
