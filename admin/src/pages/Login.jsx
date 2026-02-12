@@ -18,34 +18,30 @@ export default function Login() {
         { email, password }
       );
 
-      // Save admin token
+      // ✅ Save token
       localStorage.setItem("adminToken", res.data.token);
 
+      // ✅ Redirect to dashboard
       navigate("/");
-    } catch {
+    } catch (err) {
       setError("Invalid admin credentials");
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      
-      {/* Card */}
       <div className="bg-white shadow-2xl rounded-2xl p-8 w-96">
 
-        {/* Title */}
         <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
           Admin Login
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
 
-          {/* Error */}
           {error && (
             <p className="text-red-500 text-sm text-center">{error}</p>
           )}
 
-          {/* Email */}
           <div>
             <label className="block text-sm font-medium mb-1">
               Email Address
@@ -59,7 +55,6 @@ export default function Login() {
             />
           </div>
 
-          {/* Password */}
           <div>
             <label className="block text-sm font-medium mb-1">
               Password
@@ -73,7 +68,6 @@ export default function Login() {
             />
           </div>
 
-          {/* Button */}
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-200"
@@ -82,7 +76,6 @@ export default function Login() {
           </button>
         </form>
 
-        {/* Footer */}
         <p className="text-xs text-gray-400 text-center mt-6">
           Secure Admin Panel Access
         </p>

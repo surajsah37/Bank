@@ -20,7 +20,7 @@ export default function History() {
           }
         );
 
-        setTransactions(res.data);
+        setTransactions(res.data.transactions);
       } catch (err) {
         setError("Failed to load transactions");
       } finally {
@@ -85,3 +85,16 @@ export default function History() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+  

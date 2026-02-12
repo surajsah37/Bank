@@ -36,7 +36,7 @@ export const createTransaction = async (req, res) => {
 
 
 
-
+/*
 export const getTransactions = async (req, res) => {
   try {
     const transactions = await Transaction.find()
@@ -44,5 +44,46 @@ export const getTransactions = async (req, res) => {
     res.json(transactions);
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+*/
+
+
+
+
+export const getTransactions = async (req, res) => {
+  try {
+    const page = Number(req.query.page) || 1;
+    const limit = 5;
+    const type = req.query.type;
+    const search = req.query.search;
+
+    const query = { userId: req.user._id };
+
+    if (type && type !== "all") {
+      query.type = type;
+    }
+
+    if (search) {
+      query.description = { $regex: search, $options: "i" };
+    }
+
+    const total = await Transaction.countDocuments(query);
+
+    const transactions = await Transaction.find(query)
+      .sort({ createdAt: -1 })
+      // .skip((page - 1) * limit)
+      // .limit(limit);
+
+      console.log('transaction ka data hai ye')
+      console.log(transactions)
+    res.json({
+      transactions,
+      totalPages: Math.ceil(total / limit),
+      page,
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 };
