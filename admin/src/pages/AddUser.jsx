@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
@@ -13,78 +14,98 @@ export default function AddUser() {
     e.preventDefault();
 
     try {
-      const res = await API.post("/users", {
+      await API.post("/users", {
         name,
         email,
         balance,
       });
 
-      setMessage("✅ User added successfully");
+      setMessage("success");
       setName("");
       setEmail("");
       setBalance("");
-
-      console.log(res.data); // saved user
     } catch (error) {
-      setMessage("❌ Error adding user");
+      setMessage("error");
       console.error(error);
     }
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+
       <Sidebar />
 
       <div className="flex-1 p-6 space-y-6">
+
         <Navbar />
 
-        <div className="bg-white p-6 rounded-xl shadow max-w-xl">
-          <h2 className="text-xl font-bold mb-4">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow transition-colors duration-300 max-w-xl">
+
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
             Add New User
           </h2>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="space-y-4">
+
             <input
               type="text"
               placeholder="User Name"
-              className="w-full border p-2 mb-3 rounded"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              className="w-full border border-gray-300 dark:border-gray-600 
+                         bg-white dark:bg-gray-700 
+                         text-gray-800 dark:text-white 
+                         p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
             <input
               type="email"
               placeholder="Email"
-              className="w-full border p-2 mb-3 rounded"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              className="w-full border border-gray-300 dark:border-gray-600 
+                         bg-white dark:bg-gray-700 
+                         text-gray-800 dark:text-white 
+                         p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
             <input
               type="number"
               placeholder="Initial Balance"
-              className="w-full border p-2 mb-3 rounded"
               value={balance}
               onChange={(e) => setBalance(e.target.value)}
               required
+              className="w-full border border-gray-300 dark:border-gray-600 
+                         bg-white dark:bg-gray-700 
+                         text-gray-800 dark:text-white 
+                         p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
             >
               Add User
             </button>
+
           </form>
 
-          {message && (
-            <p className="mt-3 text-sm">
-              {message}
+          {message === "success" && (
+            <p className="mt-4 text-green-600 dark:text-green-400 text-sm">
+              ✅ User added successfully
             </p>
           )}
+
+          {message === "error" && (
+            <p className="mt-4 text-red-600 dark:text-red-400 text-sm">
+              ❌ Error adding user
+            </p>
+          )}
+
         </div>
+
       </div>
     </div>
   );

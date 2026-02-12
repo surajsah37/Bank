@@ -6,14 +6,15 @@ export default function Sidebar() {
   const role = getRoleFromToken(token);
 
   const linkClass =
-    "block px-4 py-2 rounded text-gray-600 dark:text-gray-800 hover:bg-slate-400 dark:hover:bg-gray-700";
+  "block px-4 py-2 rounded text-gray-700 dark:text-gray-300 hover:bg-slate-300 dark:hover:bg-gray-700 transition";
+
 
   const activeClass =
     "block px-4 py-2 rounded bg-blue-500 text-white";
 
   return (
-    // <div className="w-64 min-h-screen bg-white dark:bg-gray-900 p-6 shadow">
-    <div className="w-64 min-h-screen bg-slate-200 text-slate-200 p-6 shadow-xl">
+    
+    <div className="w-64 min-h-screen bg-slate-200 dark:bg-gray-900 text-gray-700 dark:text-gray-200 p-6 shadow-xl transition-colors duration-300">
 
    
 

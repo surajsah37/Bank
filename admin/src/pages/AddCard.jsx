@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Navbar from "../components/Navbar";
@@ -11,7 +12,6 @@ export default function AddCard() {
   const [balance, setBalance] = useState("");
   const [message, setMessage] = useState("");
 
-  // Fetch users for dropdown
   useEffect(() => {
     const fetchUsers = async () => {
       const res = await API.get("/users");
@@ -31,32 +31,38 @@ export default function AddCard() {
         balance
       });
 
-      setMessage("✅ Card added successfully");
+      setMessage("success");
       setUserId("");
       setCardNumber("");
       setBalance("");
     } catch (error) {
-      setMessage("❌ Error adding card");
+      setMessage("error");
       console.error(error);
     }
   };
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+
       <Sidebar />
 
       <div className="flex-1 p-6 space-y-6">
+
         <Navbar />
 
-        <div className="bg-white p-6 rounded-xl shadow max-w-xl">
-          <h2 className="text-xl font-bold mb-4">
+        <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow max-w-xl transition-colors duration-300">
+
+          <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
             Add Card
           </h2>
 
-          <form onSubmit={handleSubmit}>
-            {/* User Select */}
+          <form onSubmit={handleSubmit} className="space-y-4">
+
             <select
-              className="w-full border p-2 mb-3 rounded"
+              className="w-full border border-gray-300 dark:border-gray-600 
+                         bg-white dark:bg-gray-700 
+                         text-gray-800 dark:text-white 
+                         p-2 rounded-lg"
               value={userId}
               onChange={(e) => setUserId(e.target.value)}
               required
@@ -72,16 +78,22 @@ export default function AddCard() {
             <input
               type="text"
               placeholder="Card Number"
-              className="w-full border p-2 mb-3 rounded"
               value={cardNumber}
               onChange={(e) => setCardNumber(e.target.value)}
               required
+              className="w-full border border-gray-300 dark:border-gray-600 
+                         bg-white dark:bg-gray-700 
+                         text-gray-800 dark:text-white 
+                         p-2 rounded-lg"
             />
 
             <select
-              className="w-full border p-2 mb-3 rounded"
               value={cardType}
               onChange={(e) => setCardType(e.target.value)}
+              className="w-full border border-gray-300 dark:border-gray-600 
+                         bg-white dark:bg-gray-700 
+                         text-gray-800 dark:text-white 
+                         p-2 rounded-lg"
             >
               <option value="debit">Debit</option>
               <option value="credit">Credit</option>
@@ -90,22 +102,36 @@ export default function AddCard() {
             <input
               type="number"
               placeholder="Balance"
-              className="w-full border p-2 mb-3 rounded"
               value={balance}
               onChange={(e) => setBalance(e.target.value)}
               required
+              className="w-full border border-gray-300 dark:border-gray-600 
+                         bg-white dark:bg-gray-700 
+                         text-gray-800 dark:text-white 
+                         p-2 rounded-lg"
             />
 
-            <button className="bg-blue-500 text-white px-4 py-2 rounded">
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+            >
               Add Card
             </button>
+
           </form>
 
-          {message && (
-            <p className="mt-3 text-sm">
-              {message}
+          {message === "success" && (
+            <p className="mt-4 text-green-600 dark:text-green-400 text-sm">
+              ✅ Card added successfully
             </p>
           )}
+
+          {message === "error" && (
+            <p className="mt-4 text-red-600 dark:text-red-400 text-sm">
+              ❌ Error adding card
+            </p>
+          )}
+
         </div>
       </div>
     </div>

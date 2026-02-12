@@ -10,8 +10,11 @@ import {
 
 export default function IncomeExpenseChart({ data }) {
   return (
-    <div className="bg-white p-5 rounded-xl w-full">
-      <h2 className="font-bold mb-4">Income vs Expense</h2>
+    // <div className="bg-white p-5 rounded-xl w-full">
+    //   <h2 className="font-bold mb-4">Income vs Expense</h2>
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow transition-colors duration-300">
+    <h3 className="text-lg font-semibold text-gray-800 dark:text-white">Income vs Expense</h3>
+
 
       <ResponsiveContainer width="100%" height={250}>
         <BarChart data={data}>
